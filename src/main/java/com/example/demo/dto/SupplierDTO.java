@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import java.sql.Timestamp;
 import com.example.demo.entity.Status;
 
 import lombok.Data;
@@ -15,7 +14,9 @@ public class SupplierDTO {
 	private String update_at;
 	private Status status;
 	
-	private Long productid;
 	private Long categoryid;
+	private Long productid;
+	private Long itemid;
+	
 
 }
