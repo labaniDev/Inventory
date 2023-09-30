@@ -1,23 +1,20 @@
-package com.example.demo.dto;
+package com.example.demo.collection;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.example.demo.dto.SupplierProductDTO;
 import com.example.demo.entity.Status;
 
 import lombok.Data;
 
+@Document(collection="supplierlist")
 @Data
-public class SupplierDTO {
+public class Suppliers {
 	
 	private Long supplierid;
-	private String supplier_name;
-	private String address;
-	private String created_at;
-	private String update_at;
-	private Status status; 
 	private List<SupplierProductDTO> supplierProductList= new ArrayList<SupplierProductDTO>();
-	
-
 
 }

@@ -1,16 +1,21 @@
 package com.example.demo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.collection.SupplierList;
+
 import com.example.demo.dto.SupplierDTO;
-import com.example.demo.service.SupplierListService;
+import com.example.demo.dto.SupplierDetailsResponseDTO;
+import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.service.SupplierService;
 
 
@@ -21,20 +26,28 @@ public class SupplierController {
 	
 	@Autowired
 	SupplierService supplierService;
-	@Autowired
-	SupplierListService supplierListService;
+
 	
 	@PostMapping("/addSupplier")
-	public ResponseEntity<SupplierDTO> addSupplier(@RequestBody SupplierDTO supplierDTO) {
-		supplierService.addSupplier(supplierDTO);
-		return new ResponseEntity<SupplierDTO>(HttpStatus.CREATED);	
+	public ResponseEntity<String> addSupplier(@RequestBody SupplierDTO supplierDTO) {
+		Long supplierId=supplierService.addSupplier(supplierDTO);
+		if(supplierId!=0L)
+		return new ResponseEntity<String>("Supplier with "+supplierId+" Added Successfully",HttpStatus.CREATED);	
+		else
+		return new ResponseEntity<String>("Supplier not added",HttpStatus.OK);
+	}
+	@GetMapping("/getActiveSupplier")
+	public List<SupplierResponseDTO> getActiveSupplier(){
+		 return supplierService.getActiveSupplier();
+		
+	}
+	@GetMapping("/getSupplierDetails/{supplierId}")
+	public ResponseEntity<SupplierDetailsResponseDTO> getDetailsBySupplierid(@PathVariable Long supplierId){
+		SupplierDetailsResponseDTO supplierDTO=supplierService.getDetailsBySupplierId(supplierId);
+		return new ResponseEntity<SupplierDetailsResponseDTO>(supplierDTO,HttpStatus.OK);	
 	}
 	
-	@PostMapping("/addSupplierList")
-	public ResponseEntity<SupplierList> addSupplierList(@RequestBody SupplierList supplierList){
-		supplierListService.addSupplierList(supplierList);
-		return new ResponseEntity<SupplierList>(HttpStatus.OK);
-	}
+	
 	
 
 }
