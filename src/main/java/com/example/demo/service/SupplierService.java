@@ -1,10 +1,7 @@
 package com.example.demo.service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
@@ -12,21 +9,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.example.demo.collection.Suppliers;
-import com.example.demo.collection.SuppliersProduct;
-import com.example.demo.dto.ProductDTO;
 import com.example.demo.dto.SupplierDTO;
 import com.example.demo.dto.SupplierDetailsResponseDTO;
 import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.entity.Status;
 import com.example.demo.entity.Supplier;
 import com.example.demo.repository.SupplierRepo;
-
 import com.example.demo.repository.SuppliersRepo;
-
-import lombok.extern.slf4j.Slf4j;
-
 @Service
 public class SupplierService {
 

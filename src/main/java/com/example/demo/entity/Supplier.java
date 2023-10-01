@@ -1,7 +1,6 @@
 package com.example.demo.entity;
 
-import java.util.Set;
-
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -25,6 +24,9 @@ public class Supplier {
 	private String update_at;
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	
+	@OneToMany(mappedBy="supplier")
+	private List<Order> orders;
 	
 
 	
