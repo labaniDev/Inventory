@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -17,7 +19,7 @@ public class Supplier {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long supplierid;
+	private Long id;
 	private String supplier_name;
 	private String address;
 	private String created_at;
@@ -25,7 +27,7 @@ public class Supplier {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@OneToMany(mappedBy="supplier")
+	@OneToMany(mappedBy="supplier",cascade = CascadeType.ALL)
 	private List<Order> orders;
 	
 

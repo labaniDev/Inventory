@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class SupplierResponseDTO {
 	
-	private Long supplierid;
+	private Long id;
 	private String supplier_name;
 	private String address;
 

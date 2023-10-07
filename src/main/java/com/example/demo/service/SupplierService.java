@@ -69,18 +69,18 @@ public class SupplierService {
 			LocalDateTime now = LocalDateTime.now();
 			supplier.setCreated_at(dtf.format(now));
 			supplier.setUpdate_at(dtf.format(now));
-			supplier.setStatus(Status.inactive);
+			supplier.setStatus(Status.active);
 			supplier = supplierRepo.save(supplier);
 
-			LOGGER.info("Supplier Id: " + supplier.getSupplierid());
+			LOGGER.info("Supplier Id: " + supplier.getId());
 
-			if (supplier.getSupplierid() != null) {
-				supplierDTO.setSupplierid(supplier.getSupplierid());
+			if (supplier.getId()!= null) {
+				supplierDTO.setId(supplier.getId());
 				Suppliers suppliers = modelMapper.map(supplierDTO, Suppliers.class);
 				LOGGER.info("Supplier Data before saving to Mongo: " + suppliers);
 				suppliersRepo.save(suppliers);
 				
-				return supplier.getSupplierid();
+				return supplier.getId();
 
 			}
 		} catch (Exception ex) {
@@ -107,14 +107,14 @@ public class SupplierService {
 
 	}
 
-	public SupplierDetailsResponseDTO getDetailsBySupplierId(Long supplierId) {
+	public SupplierDetailsResponseDTO getDetailsBySupplierId(Long id) {
 
 		SupplierDetailsResponseDTO supplierDTO;
 		try {
 
-			LOGGER.info("Inside getDetailsBySupplierId :: " + supplierId);
+			LOGGER.info("Inside getDetailsBySupplierId :: " + id);
 
-			Suppliers suppliers = suppliersRepo.findBySupplierid(supplierId);
+			Suppliers suppliers = suppliersRepo.findBySupplierid(id);
 
 			supplierDTO = modelMapper.map(suppliers, SupplierDetailsResponseDTO.class);
 

@@ -9,7 +9,7 @@ import com.example.demo.entity.Supplier;
 import java.util.List;
 
 
-@Repository
+
 public interface SupplierRepo extends CrudRepository<Supplier,Long>,JpaRepository<Supplier,Long> {
 	
 	List<Supplier> findByStatus(Status status);

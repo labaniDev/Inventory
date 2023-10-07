@@ -22,12 +22,12 @@ public class Order {
 	//private Long userid;
 	private Integer type;
 	@Enumerated(EnumType.STRING)
-	private OrderStatus orderstatus;
+	private Status status;
 	private Float subtotal;
-	private Float itemdiscount;
+	//private Float itemdiscount;
 	private Float tax;
 	private Float shipping;
-	private Float total;
+	//private Float total;
 	private String promo;
 	private Float discount;
 	private Float grandtotal;
@@ -35,8 +35,10 @@ public class Order {
 	private String update_at;
 	
 	@OneToOne
-	@JoinColumn(name="supplier_id",referencedColumnName="supplierid")
+	@JoinColumn(name="supplierid",referencedColumnName="id")
 	private Supplier supplier;
 
+//	@OneToMany(mappedBy="order")
+//    private Set<Orderitem> orderitems;
 
 }
