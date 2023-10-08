@@ -6,6 +6,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class Supplier {
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	
-	@OneToMany(mappedBy="supplier",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="supplier")
 	private List<Order> orders;
 	
 

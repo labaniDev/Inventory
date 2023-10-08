@@ -10,10 +10,8 @@ public class OrderDTO {
 	private Integer type;
 	private Status status;
 	private Float subtotal;
-	//private Float itemdiscount;
 	private Float tax;
 	private Float shipping;
-	//private Float total;
 	private String promo;
 	private Float discount;
 	private Float grandtotal;

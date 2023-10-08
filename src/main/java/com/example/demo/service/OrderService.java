@@ -41,7 +41,7 @@ public class OrderService {
 			  order.setCreated_at(dtf.format(now));
 			  order.setUpdate_at(dtf.format(now));
 			  order.setStatus(Status.active);
-			  Float promoDiscount = Float.parseFloat(orderDTO.getPromo());
+			  Float promoDiscount = Float.valueOf(orderDTO.getPromo());
 			  Float grandtotal=orderDTO.getSubtotal()-orderDTO.getDiscount()+orderDTO.getTax()+orderDTO.getShipping()-promoDiscount;
 			  order.setGrandtotal(grandtotal);
 			  orderRepo.save(order);
