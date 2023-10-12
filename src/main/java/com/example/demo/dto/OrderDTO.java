@@ -1,5 +1,8 @@
 package com.example.demo.dto;
 
+import java.util.Set;
+
+import com.example.demo.entity.Orderitem;
 import com.example.demo.entity.Status;
 
 import lombok.Data;
@@ -18,5 +21,6 @@ public class OrderDTO {
 	private String created_at;
 	private String update_at;
 	private SupplierDTO supplier;
+	private Set<OrderitemDTO> orderitems;
 
 }

@@ -1,4 +1,7 @@
 package com.example.demo.entity;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -6,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Data;
@@ -33,11 +37,8 @@ public class Order {
 	   @JoinColumn(name = "supplier_id", referencedColumnName = "id") 
 	   private Supplier supplier;
 	
-//	@OneToOne(cascade = CascadeType.MERGE,fetch= FetchType.EAGER)
-//	@JoinColumn(name="supplier_id",referencedColumnName="id")
-//	private Supplier supplier;
 
-//	@OneToMany(mappedBy="order")
-//    private Set<Orderitem> orderitems;
+	@OneToMany(mappedBy="order",cascade = CascadeType.ALL)
+    private Set<Orderitem> orderitems;
 
 }

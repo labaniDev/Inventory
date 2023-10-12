@@ -13,23 +13,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.OrderDTO;
-import com.example.demo.service.OrderService;
+import com.example.demo.dto.OrderitemDTO;
+import com.example.demo.service.OrderItemService;
 
 @RestController
-@RequestMapping("/api/order")
-public class OrderController {
+@RequestMapping("/api/orderitem")
+public class OrderItemController {
 	@Autowired
-	OrderService orderService;
+	OrderItemService orderItemService;
 	
-	@PostMapping("/addOrder")
-	public ResponseEntity<String> addOrder(@RequestBody OrderDTO orderDTO) {
-		orderService.addOrder(orderDTO);
+	@PostMapping("/addOrderItem")
+	public ResponseEntity<String> addOrderitem(@RequestBody OrderDTO orderDTO) {
+		orderItemService.addOrderItem(orderDTO);
 		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
-	
-	@GetMapping("/getOrderBySupplierId/{id}")
-	public List<OrderDTO> getOrderBySupplierId(@PathVariable("id") Long id){
-		return orderService.getOrderBySupplierId(id);
+	@GetMapping("/getOrderitemByOrderId/{id}")
+	public List<OrderitemDTO> getOrderitemByorderId(@PathVariable("id") Long id){
+		return orderItemService.getOrderitemByOrderid(id);
 	}
 
 }
