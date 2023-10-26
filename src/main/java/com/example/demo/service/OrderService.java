@@ -1,20 +1,15 @@
 package com.example.demo.service;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.dto.OrderDTO;
-import com.example.demo.dto.ProductDTO;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.Status;
 import com.example.demo.entity.Supplier;
@@ -36,9 +31,6 @@ public class OrderService {
 	public void addOrder(OrderDTO orderDTO) {
 		try {
 			LOGGER.info("Add Order");
-//		Optional<Supplier> supplierOptional=supplierRepo.findById(orderDTO.getSupplier().getId());
-//		if(supplierOptional.isPresent()) {
-//			Supplier supplier=supplierOptional.get();
 			Order order=modelMapper.map(orderDTO, Order.class);
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 			  LocalDateTime now = LocalDateTime.now(); 

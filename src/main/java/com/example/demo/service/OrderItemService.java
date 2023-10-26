@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.demo.dto.OrderDTO;
 import com.example.demo.dto.OrderitemDTO;
-import com.example.demo.dto.ProductDTO;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.Orderitem;
 import com.example.demo.entity.Status;

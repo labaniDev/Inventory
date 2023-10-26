@@ -1,8 +1,5 @@
 package com.example.demo.dto;
-
-import com.example.demo.entity.Order;
 import com.example.demo.entity.Status;
-
 import lombok.Getter;
 import lombok.Setter;
 

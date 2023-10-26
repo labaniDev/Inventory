@@ -75,8 +75,9 @@ public class SupplierService {
 			LOGGER.info("Supplier Id: " + supplier.getId());
 
 			if (supplier.getId()!= null) {
-				supplierDTO.setId(supplier.getId());
-				Suppliers suppliers = modelMapper.map(supplierDTO, Suppliers.class);
+				Suppliers suppliers=new Suppliers();
+				suppliers.setSupplierid(supplier.getId());
+				suppliers.setSupplierProductList(supplierDTO.getSupplierProductList());
 				LOGGER.info("Supplier Data before saving to Mongo: " + suppliers);
 				suppliersRepo.save(suppliers);
 				
