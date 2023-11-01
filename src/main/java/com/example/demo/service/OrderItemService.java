@@ -11,6 +11,10 @@ import java.util.Set;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.example.demo.dto.OrderDTO;
 import com.example.demo.dto.OrderitemDTO;
 import com.example.demo.entity.Order;
@@ -30,11 +34,11 @@ public class OrderItemService {
 	OrderRepo orderRepo;
 	
 	public static final Logger LOGGER = LoggerFactory.getLogger(OrderItemService.class);
-	
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
 	public void addOrderItem(OrderDTO orderDTO) {
 		
 		try {
-			LOGGER.info("Add Order Item");
+			LOGGER.debug("Inside add orderItem::"+orderDTO.toString());
 			 Optional<Order> orderOptional=orderRepo.findById(orderDTO.getId());
 			 if(orderOptional.isPresent()) {
 				 Order order = orderOptional.get();
@@ -49,10 +53,11 @@ public class OrderItemService {
 				 }); 
 				 order.getOrderitems().addAll(orderitems);
 				 orderRepo.save(order);
+				 LOGGER.debug("OrderItem Added Successfully");
 			 }
 		}catch(Exception ex) {
 			ex.printStackTrace();
-			LOGGER.error(ex.getMessage());
+			LOGGER.error("Exception in addOrderItem::"+ex.getMessage());
 		}
 	}
 	public List<OrderitemDTO> getOrderitemByOrderid(Long id){

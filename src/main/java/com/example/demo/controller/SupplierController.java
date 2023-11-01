@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +46,11 @@ public class SupplierController {
 	public ResponseEntity<SupplierDetailsResponseDTO> getDetailsBySupplierid(@PathVariable Long supplierId){
 		SupplierDetailsResponseDTO supplierDTO=supplierService.getDetailsBySupplierId(supplierId);
 		return new ResponseEntity<SupplierDetailsResponseDTO>(supplierDTO,HttpStatus.OK);	
+	}
+	@PutMapping("/updateSupplier")
+	public ResponseEntity<String> updateSupplier(@RequestBody SupplierDTO supplierDTO) {
+		supplierService.updateSupplier(supplierDTO);
+		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 	
 	

@@ -2,12 +2,17 @@ package com.example.demo.service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import com.example.demo.collection.Suppliers;
 import com.example.demo.dto.SupplierDTO;
@@ -31,7 +36,7 @@ public class SupplierService {
 //	@Autowired
 //	SuppliersProductRepo suppliersProductRepo;
 
-	public static final Logger LOGGER = LoggerFactory.getLogger(SupplierService.class);
+	private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
 //	@Value("${test.url}")
 //	private String testUrl;
@@ -55,14 +60,14 @@ public class SupplierService {
 //			ResponseEntity.ok();
 //			}            
 //       }
-
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
 	public Long addSupplier(SupplierDTO supplierDTO) {
 		
 		Long supplierId=0L;
 
 		try {
 
-			LOGGER.info("Adding Supplier: " + supplierDTO);
+			LOGGER.debug("Inside addSupplier::"+supplierDTO.toString());
 
 			Supplier supplier = modelMapper.map(supplierDTO, Supplier.class);
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -71,24 +76,20 @@ public class SupplierService {
 			supplier.setUpdate_at(dtf.format(now));
 			supplier.setStatus(Status.active);
 			supplier = supplierRepo.save(supplier);
-
 			LOGGER.info("Supplier Id: " + supplier.getId());
-
 			if (supplier.getId()!= null) {
 				Suppliers suppliers=new Suppliers();
 				suppliers.setSupplierid(supplier.getId());
 				suppliers.setSupplierProductList(supplierDTO.getSupplierProductList());
 				LOGGER.info("Supplier Data before saving to Mongo: " + suppliers);
 				suppliersRepo.save(suppliers);
-				
+				LOGGER.debug("Complete AddSupplier");
 				return supplier.getId();
-
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();
-			LOGGER.error(ex.getMessage());
+			LOGGER.error("Exceptionn in addSupplier::"+ex.getMessage());
 		}
-
 		return supplierId;
 	}
 
@@ -114,11 +115,8 @@ public class SupplierService {
 		try {
 
 			LOGGER.info("Inside getDetailsBySupplierId :: " + id);
-
 			Suppliers suppliers = suppliersRepo.findBySupplierid(id);
-
 			supplierDTO = modelMapper.map(suppliers, SupplierDetailsResponseDTO.class);
-
 		} catch (Exception ex) {
 			supplierDTO = new SupplierDetailsResponseDTO();
 			ex.printStackTrace();
@@ -127,4 +125,29 @@ public class SupplierService {
 		return supplierDTO;
 
 	}
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
+	public void updateSupplier(SupplierDTO supplierDTO) {
+		try {
+			LOGGER.debug("Inside updateSupplier::" +supplierDTO.toString());
+		Optional<Supplier> supplierOptional=supplierRepo.findById(supplierDTO.getId());
+		if(supplierOptional.isPresent()) {
+			Supplier supplier=supplierOptional.get();
+			supplier.setSupplier_name(supplierDTO.getSupplier_name());
+			supplier.setAddress(supplierDTO.getAddress());
+			supplierRepo.save(supplier);
+			if(supplier.getId()!=null) {
+				Suppliers suppliers=new Suppliers();
+				suppliers.setSupplierid(supplier.getId());
+				suppliers.setSupplierProductList(supplierDTO.getSupplierProductList());
+				LOGGER.info("Supplier Data before saving to Mongo: " + suppliers);
+				suppliersRepo.save(suppliers);
+			}
+			
+		}
+	}catch (Exception ex) {
+		ex.printStackTrace();
+		LOGGER.error("Exceptionn in addSupplier::"+ex.getMessage());
+	}
 }
+}
+

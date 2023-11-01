@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 
 @Entity
@@ -33,11 +36,12 @@ public class Order {
 	private String created_at;
 	private String update_at;   
 	
+	   @JsonIgnore
 	   @OneToOne	  
 	   @JoinColumn(name = "supplier_id", referencedColumnName = "id") 
 	   private Supplier supplier;
 	
-
+	  @JsonIgnore
 	@OneToMany(mappedBy="order",cascade = CascadeType.ALL)
     private Set<Orderitem> orderitems;
 
