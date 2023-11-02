@@ -125,6 +125,8 @@ public class SupplierService {
 		return supplierDTO;
 
 	}
+	
+	//Update Supplier
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
 	public void updateSupplier(SupplierDTO supplierDTO) {
 		try {
@@ -137,7 +139,7 @@ public class SupplierService {
 			supplierRepo.save(supplier);
 			if(supplier.getId()!=null) {
 				Suppliers suppliers=new Suppliers();
-				suppliers.setSupplierid(supplier.getId());
+				suppliers.setSupplierid(supplierDTO.getId());
 				suppliers.setSupplierProductList(supplierDTO.getSupplierProductList());
 				LOGGER.info("Supplier Data before saving to Mongo: " + suppliers);
 				suppliersRepo.save(suppliers);
@@ -146,7 +148,7 @@ public class SupplierService {
 		}
 	}catch (Exception ex) {
 		ex.printStackTrace();
-		LOGGER.error("Exceptionn in addSupplier::"+ex.getMessage());
+		LOGGER.error("Exception in updateSupplier::"+ex.getMessage());
 	}
 }
 }

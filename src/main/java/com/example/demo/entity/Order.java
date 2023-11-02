@@ -36,12 +36,11 @@ public class Order {
 	private String created_at;
 	private String update_at;   
 	
-	   @JsonIgnore
+	  
 	   @OneToOne	  
 	   @JoinColumn(name = "supplier_id", referencedColumnName = "id") 
 	   private Supplier supplier;
 	
-	  @JsonIgnore
 	@OneToMany(mappedBy="order",cascade = CascadeType.ALL)
     private Set<Orderitem> orderitems;
 
