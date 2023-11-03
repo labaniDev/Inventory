@@ -27,6 +27,8 @@ public class Order {
 	private Integer type;
 	@Enumerated(EnumType.STRING)
 	private Status status;
+	@Enumerated(EnumType.STRING)
+	private Orderstatus orderstatus;
 	private Float subtotal;
 	private Float tax;
 	private Float shipping;

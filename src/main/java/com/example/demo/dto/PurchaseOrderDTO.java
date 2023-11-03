@@ -10,8 +10,8 @@ public class PurchaseOrderDTO {
 	private Long productid;
 	private Long itemid;
 	private Integer fullfillmentquantity;
-	private float price;
-	private float total;
+	private Float price;
+	private Float total;
 	private OrderDTO order;
 
 	

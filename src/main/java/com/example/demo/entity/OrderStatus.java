@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-public enum OrderStatus {
+public enum Orderstatus {
 	place,
 	accepted,deliver,intransit,
 

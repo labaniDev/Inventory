@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.dto.OrderDTO;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.Orderstatus;
 import com.example.demo.entity.Status;
 import com.example.demo.entity.Supplier;
 import com.example.demo.repository.OrderRepo;
@@ -41,6 +42,7 @@ public class OrderService {
 			  order.setCreated_at(dtf.format(now));
 			  order.setUpdate_at(dtf.format(now));
 			  order.setStatus(Status.active);
+			  order.setOrderstatus(Orderstatus.place);
 			  Float promoDiscount = Float.valueOf(orderDTO.getPromo());
 			  Float grandtotal=orderDTO.getSubtotal()-orderDTO.getDiscount()+orderDTO.getTax()+orderDTO.getShipping()-promoDiscount;
 			  order.setGrandtotal(grandtotal);

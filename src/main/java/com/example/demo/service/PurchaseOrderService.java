@@ -1,5 +1,4 @@
 package com.example.demo.service;
-
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import com.example.demo.entity.Order;
 import com.example.demo.entity.PurchaseOrder;
 import com.example.demo.repository.OrderRepo;
 import com.example.demo.repository.PurchaseOrderRepo;
-
 @Service
 public class PurchaseOrderService {
 	
@@ -34,8 +32,8 @@ public class PurchaseOrderService {
 				Order order=orderOptional.get();
 				PurchaseOrder purchaseOrder = modelMapper.map(purchaseOrderDTO, PurchaseOrder.class);
 				Integer quantity = purchaseOrderDTO.getFullfillmentquantity();
-		        float price = purchaseOrderDTO.getPrice();
-		        float totalPrice=quantity*price;
+		        Float price = purchaseOrderDTO.getPrice();
+		        Float totalPrice=quantity*price;
 		        purchaseOrder.setTotal(totalPrice);
 		        purchaseOrderRepo.save(purchaseOrder);
 		        LOGGER.debug("Added Successfully");

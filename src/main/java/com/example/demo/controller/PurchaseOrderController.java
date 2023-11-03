@@ -21,7 +21,7 @@ public class PurchaseOrderController {
 	@PostMapping("/addPurchaseOrder")
 	public ResponseEntity<String> addPurchaseOrder(@RequestBody PurchaseOrderDTO purchaseOrderDTO) {
 		purchaseOrderService.addfullfillmentOrder(purchaseOrderDTO);
-		return new ResponseEntity<String>(HttpStatus.OK);
+		return new ResponseEntity<String>(HttpStatus.CREATED);
 	}
 
 }
