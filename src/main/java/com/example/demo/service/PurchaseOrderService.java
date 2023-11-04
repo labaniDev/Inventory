@@ -24,7 +24,7 @@ public class PurchaseOrderService {
 	ModelMapper modelMapper;
 	private  final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
-	public void addfullfillmentOrder(PurchaseOrderDTO purchaseOrderDTO) {
+	public void purchaseOrder(PurchaseOrderDTO purchaseOrderDTO) {
 		try {
 			LOGGER.debug("Inside addFullFillmentOrder::"+purchaseOrderDTO.toString());
 			Optional<Order> orderOptional=orderRepo.findById(purchaseOrderDTO.getOrder().getId());
@@ -45,6 +45,35 @@ public class PurchaseOrderService {
 		
 			
 	}
+	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
 
-}
+	public void recieveOrder(PurchaseOrderDTO purchaseOrderDTO) {
+	try {
+	LOGGER.debug("Inside updateselleritem::"+purchaseOrderDTO.toString());
+	if (purchaseOrderDTO.getId() == null) {
+	LOGGER.error("Id is null in PurchaseOrderDTO");
+	return; }
+	Optional<PurchaseOrder>orderItem = purchaseOrderRepo.findById(purchaseOrderDTO.getId());
+	if(orderItem.isPresent()) {
+	PurchaseOrder order = orderItem.get();
+	PurchaseOrder updateitemOrder = modelMapper.map(purchaseOrderDTO,PurchaseOrder.class);
+	Integer quantity = purchaseOrderDTO.getFullfillmentquantity();
+	float price = purchaseOrderDTO.getPrice();
+	float totalPrice=quantity*price;
+	updateitemOrder.setCategoryid(purchaseOrderDTO.getCategoryid());
+	updateitemOrder.setProductid(purchaseOrderDTO.getProductid());
+	updateitemOrder.setFullfillmentquantity(purchaseOrderDTO.getFullfillmentquantity());
+	updateitemOrder.setItemid(purchaseOrderDTO.getItemid());
+	updateitemOrder.setTotal(totalPrice);
+	purchaseOrderRepo.save(updateitemOrder);
+	LOGGER.debug("UpdateSellerItem Succesfully");
+	}
+	}catch(Exception ex) {
+	ex.printStackTrace();
+	LOGGER.error("Exception in addseller::"+ex.getMessage());
+	}
+	}
+	}
+
+
 
