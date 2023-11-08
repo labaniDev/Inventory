@@ -1,6 +1,8 @@
 package com.example.demo.service;
+import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.dto.PurchaseOrderDTO;
+import com.example.demo.dto.SupplierResponseDTO;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.PurchaseOrder;
 import com.example.demo.repository.OrderRepo;
@@ -44,6 +47,23 @@ public class PurchaseOrderService {
 		}
 		
 			
+	}
+	
+	public List<PurchaseOrderDTO> getAllPurchaseOrder(){
+		try {
+			LOGGER.info("Get All PurchaseOrder");
+			List<PurchaseOrder> purchaseOrderList=purchaseOrderRepo.findAll();
+			List<PurchaseOrderDTO> purchaseOrderDTOList=modelMapper.map(purchaseOrderList,
+					new TypeToken<List<PurchaseOrderDTO>>() {
+					}.getType());
+			return purchaseOrderDTOList;
+			
+		}catch(Exception ex) {
+			ex.printStackTrace();
+			LOGGER.error("Exception in Get All PurchaseOrder ::"+ex.getMessage());
+		}
+		return null;
+		
 	}
 	@Transactional(propagation = Propagation.REQUIRED,isolation = Isolation.READ_COMMITTED)
 
