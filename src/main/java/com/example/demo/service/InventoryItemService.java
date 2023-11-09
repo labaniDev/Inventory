@@ -39,7 +39,7 @@ public class InventoryItemService {
 	@Value("${test.url}")
 	private String testUrl;
 	
-	private static final String UPDATE_Item="/item/updateItem";
+	private static final String UPDATE_ItemPrice="/item/updateItemPrice";
 	
 	public void addInventoryitem(InventoryItemDTO inventoryItemDTO) {
 		try {
@@ -86,7 +86,7 @@ public class InventoryItemService {
 	public void updateInventoryItemPrice(ItemResponseDTO itemResponseDTO) {
 		try {
 			LOGGER.debug("Inside UpdateInventoryItemPrice::"+itemResponseDTO.toString());
-		String apiUrl=testUrl+UPDATE_Item;
+		String apiUrl=testUrl+UPDATE_ItemPrice;
 		HttpHeaders headers=new HttpHeaders();
 	headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<ItemResponseDTO> requestEntity = new HttpEntity<>(itemResponseDTO, headers);
